@@ -1,11 +1,13 @@
-
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import dp from "../assets/images/my-pic.jpg";
+import TokenContext from '../Contexts/TokenContext';
+import { useContext,createContext } from 'react';
+
 
 const Nav = () => {
-  const [token, setToken] = useState(false);
+  
+  const { token, setToken } = useContext(TokenContext);
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate();
