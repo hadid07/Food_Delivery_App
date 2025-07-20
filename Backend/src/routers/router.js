@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/controllers')
 const multer = require('multer');
+const { default: mongoose } = require('mongoose');
 
 
 
@@ -24,5 +25,6 @@ router.get('/',(req,res)=>{
 })
 
 router.post('/signup',upload.single('image'),controller.signup_user)
+router.post('/login',controller.login_user);
 
 module.exports = router;

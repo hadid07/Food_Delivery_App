@@ -1,5 +1,7 @@
 const User = require('../models/users');
 const path = require('path');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 module.exports.signup_user = async (req, res) => {
   try {
@@ -26,12 +28,72 @@ module.exports.signup_user = async (req, res) => {
     await new_user.save();
 
     res.status(201).json({
-      success:true,
-       message: "User created successfully"
-     });
+      success: true,
+      message: "User created successfully"
+    });
   } catch (error) {
-    res.status(500).json({ success:false,
-      error: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      error: "Internal server error"
+    });
     console.log(error)
   }
 };
+
+
+module.exports.login_user = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+
+    //--------Finding user-------
+    const user = await User.findOne({ email: username });
+
+
+    // -------if not found ---------
+    if (!user) {
+      res.json({ message: "User not found " });
+      return;
+    }
+
+    // -------verify password------
+
+    const verify_password = await bcrypt.compare(password,user.password);
+    
+
+
+    // ----incorrect password-----
+    if(!verify_password){
+      res.json({
+        message:'correct username but incorrect password'
+      })
+      return;
+    }
+
+
+    // ------correct password.... crating JWT-----
+     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "15m"
+    });
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+      maxAge: 15 * 60 * 1000
+    }).json({
+      token:token,
+      message:'user founded and password matched',
+      verification : verify_password,
+      user:user
+    })
+
+    return;
+
+  } catch (err) {
+    console.log(err)
+    res.json({ message: 'Internal Error' }
+
+    )
+    return;
+  }
+}
