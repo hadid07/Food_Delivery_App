@@ -42,6 +42,7 @@ module.exports.signup_user = async (req, res) => {
 
 
 module.exports.login_user = async (req, res) => {
+
   const { username, password } = req.body;
   try {
 
@@ -51,7 +52,9 @@ module.exports.login_user = async (req, res) => {
 
     // -------if not found ---------
     if (!user) {
-      res.json({ message: "User not found " });
+      res.json({ message: "User not found ",
+        isValid:false
+       });
       return;
     }
 
@@ -64,7 +67,8 @@ module.exports.login_user = async (req, res) => {
     // ----incorrect password-----
     if(!verify_password){
       res.json({
-        message:'correct username but incorrect password'
+        message:'correct username but incorrect password',
+        isValid:false
       })
       return;
     }
@@ -75,23 +79,27 @@ module.exports.login_user = async (req, res) => {
       expiresIn: "15m"
     });
 
+
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "Strict",
+      secure: false,
+      sameSite: "Lax",
       maxAge: 15 * 60 * 1000
     }).json({
       token:token,
-      message:'user founded and password matched',
+      message:'Login Successfull',
       verification : verify_password,
-      user:user
+      user:user,
+      isValid:true
     })
 
     return;
 
   } catch (err) {
-    console.log(err)
-    res.json({ message: 'Internal Error' }
+    
+    res.json({ message: 'Internal Error',
+      isValid:false
+     }
 
     )
     return;

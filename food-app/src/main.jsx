@@ -5,11 +5,14 @@ import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {TokenProvider} from './Contexts/TokenContext.jsx'
 import { LoginProvider } from './Contexts/LoginContext.jsx'
+import { UserProvider } from './Contexts/UserContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <TokenProvider>
     <LoginProvider>
+      <UserProvider>
     <App />
+      </UserProvider>
     </LoginProvider>
   </TokenProvider>
 
