@@ -43,6 +43,7 @@ const Signup = () => {
 
       console.log("Success:", response.data);
       alert("Signup successful");
+      setLogin(true);
     } catch (err) {
       console.error("Signup error:", err);
       alert("Signup failed");
