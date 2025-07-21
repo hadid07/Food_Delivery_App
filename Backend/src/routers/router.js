@@ -1,24 +1,12 @@
 const express = require('express')
+const { default: mongoose } = require('mongoose');
+const multer = require('multer');
 const router = express.Router()
 const controller = require('../controllers/controllers')
-const multer = require('multer');
-const { default: mongoose } = require('mongoose');
+const is_Auth = require('../Middleware/isAuth');
+const upload = require('../Middleware/uploadimage');
 
-
-
-// Configure multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');  // folder where images will be saved
-  },
-  filename: function (req, file, cb) {
-    // Make filename unique: timestamp + original name
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-
-const upload = multer({ storage: storage });
-
+// // // Configure multer storage
 
 router.get('/',(req,res)=>{
     res.send('Food Delivery App')
@@ -26,5 +14,6 @@ router.get('/',(req,res)=>{
 
 router.post('/signup',upload.single('image'),controller.signup_user)
 router.post('/login',controller.login_user);
+router.get('/isAuth',is_Auth,controller.is_Auth);
 
 module.exports = router;

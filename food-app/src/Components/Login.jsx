@@ -39,6 +39,7 @@ const Login = () => {
       })
       
 
+      // setToken(response.data.token)
       const token = response.data.token;
       const isValid = response.data.isValid;
       if(!isValid){
@@ -47,7 +48,7 @@ const Login = () => {
       
       if(isValid){
         alert(response.data.message);
-        setToken(true);
+        setToken(token);
         setUser(response.data.user)
         navigate('/')
         alert(`Welcome ${response.data.user.f_name}`)

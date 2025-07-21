@@ -2,7 +2,7 @@ const User = require('../models/users');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
+const multer = require('multer');
 module.exports.signup_user = async (req, res) => {
   try {
     // Text fields come in req.body
@@ -10,6 +10,8 @@ module.exports.signup_user = async (req, res) => {
 
     // If user uploaded a file, multer puts file info in req.file
     // If no file uploaded, req.file will be undefined
+    
+
     let imageFilename = 'default.jpeg'; // your default image filename
 
     if (req.file) {
@@ -26,6 +28,9 @@ module.exports.signup_user = async (req, res) => {
     });
 
     await new_user.save();
+
+
+    
 
     res.status(201).json({
       success: true,
@@ -103,5 +108,20 @@ module.exports.login_user = async (req, res) => {
 
     )
     return;
+  }
+}
+
+
+module.exports.is_Auth = async(req,res)=>{
+  try{
+
+    const id = req.user._id
+    
+    const user = await User.findOne({_id:id});
+    res.json({token:true,user:user});
+    return
+  }catch(err){
+    console.log(err);
+    return res.json({message:"error occured"})
   }
 }
