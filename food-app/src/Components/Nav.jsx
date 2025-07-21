@@ -3,12 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import dp from "../assets/images/my-pic.jpg";
 import TokenContext from '../Contexts/TokenContext';
 import { useContext,createContext } from 'react';
+import UserContext from '../Contexts/UserContext';
 
 
 const Nav = () => {
   
   const { token, setToken } = useContext(TokenContext);
   const [showMenu, setShowMenu] = useState(false);
+  const {user,setUser} = useContext(UserContext);
+  // const image = user.image;
   const menuRef = useRef();
   const navigate = useNavigate();
 
@@ -50,7 +53,7 @@ const Nav = () => {
           {token ? (
             <div className="position-relative" ref={menuRef}>
               <img
-                src={dp}
+                src={`http://localhost:3000/uploads/${user.image}`}
                 alt="Profile"
                 className="rounded-circle"
                 style={{
