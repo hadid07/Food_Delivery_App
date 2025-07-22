@@ -4,6 +4,7 @@ import dp from "../assets/images/my-pic.jpg";
 import TokenContext from '../Contexts/TokenContext';
 import { useContext,createContext } from 'react';
 import UserContext from '../Contexts/UserContext';
+import axios from 'axios';
 
 
 const Nav = () => {
@@ -14,6 +15,16 @@ const Nav = () => {
   // const image = user.image;
   const menuRef = useRef();
   const navigate = useNavigate();
+
+  const handeLogout = async()=>{
+    const response = await axios.post('http://localhost:3000/logout',{},{
+      withCredentials:true
+    });
+    // const Ver_token = response.data.token;
+    setToken(response.data.token);
+    setUser(null);
+
+  }
 
   // Close dropdown when clicking outside the menu
   useEffect(() => {
@@ -70,6 +81,8 @@ const Nav = () => {
                   className="position-absolute end-0 mt-2 bg-light border rounded shadow p-2"
                   style={{ zIndex: 1000, cursor: 'pointer' }}
                 >
+
+                  <div><p className='text-center text-danger'>{`${user.f_name}`}</p></div>
                   <div
                     className="dropdown-item"
                     onClick={() => navigate('/Cart')}
@@ -88,7 +101,7 @@ const Nav = () => {
 
                   <button
                     className="btn btn-danger text-white mt-2"
-                    onClick={() => setToken(false)}
+                    onClick={handeLogout}
                   >
                     Logout
                   </button>

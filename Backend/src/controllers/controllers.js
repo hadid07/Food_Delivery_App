@@ -125,3 +125,15 @@ module.exports.is_Auth = async(req,res)=>{
     return res.json({message:"error occured"})
   }
 }
+
+module.exports.logout_user = (req,res)=>{
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: false, 
+    sameSite: 'Lax',
+    path:'/'
+  }).json({
+    token:false,
+    message:'user logged_out'
+  })
+}

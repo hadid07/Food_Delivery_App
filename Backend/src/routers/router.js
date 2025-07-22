@@ -15,5 +15,6 @@ router.get('/',(req,res)=>{
 router.post('/signup',upload.single('image'),controller.signup_user)
 router.post('/login',controller.login_user);
 router.get('/isAuth',is_Auth,controller.is_Auth);
+router.post('/logout',controller.logout_user);
 
 module.exports = router;

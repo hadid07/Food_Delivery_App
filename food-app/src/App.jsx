@@ -9,6 +9,7 @@ import axios from 'axios';
 import LoginContext from './Contexts/LoginContext';
 import UserContext from './Contexts/UserContext';
 import TokenContext from './Contexts/TokenContext';
+import AdminPanel from './Pages/AdminPanel';
 
 
 const App = () => {
@@ -21,14 +22,21 @@ const App = () => {
 
         const response = await axios.get('http://localhost:3000/isAuth',
           {withCredentials:true});
-          console.log(response.data);
-          setToken(response.data.token);
-          if(response.data.user){
+          // console.log(response.data);
+          if(response.data.token){
+            setToken(response.data.token);
             setUser(response.data.user);
           }
+          else{
+            setToken(false);
+            setUser(null);
+          }
+          
+          
 
         }catch(err){
-          console.log(err);
+          setToken(false);
+          setUser(null);
         }
     }
     
@@ -46,6 +54,7 @@ const App = () => {
         <Route path='/Auth' element = {<Auth/>}></Route>
         <Route path='/Cart' element = {<Cart/>}></Route>
         <Route path='/My-Orders' element = {<MyOrders/>}></Route>
+        <Route path='/Admin-Dashboard' element={<AdminPanel/>}></Route>
       </Routes>
     </Router>
     
