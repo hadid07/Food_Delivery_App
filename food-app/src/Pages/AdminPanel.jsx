@@ -1,6 +1,7 @@
 import React from 'react'
 import AdminNav from '../Components/AdminNav'
-import ManageItems from '../Components/ManageItems'
+import FinanceCards from '../Components/FinanceCards'
+import AddItems from '../Components/AddItems'
 
 const AdminPanel = () => {
   return (
@@ -13,11 +14,10 @@ const AdminPanel = () => {
 
         {/* -----Main----- */}
 
-        <div className='row '>
-          <div className='border border-1 border-light bg-light col-7 mx-auto mt-5 rounded'>
-          <ManageItems/>
-
-          </div>
+        <div className=''>
+         <FinanceCards/>
+         <AddItems/>
+        
         </div>
     </div>
   )
