@@ -5,7 +5,7 @@ const ItemCard = (props) => {
     return (
         <div>
             <div className="card" style={{ width: "15rem", margin: "1rem" }}>
-                <img src= {`http://localhost:3000/uploads/${props.image}`} className="card-img-top" alt="..." />
+                <img src= {`http://localhost:3000/uploads/${props.image}`} className="card-img-top" alt="..."  style={{height:"230px",objectFit:'cover'}} />
                 <div className="card-body" style={{ textAlign: 'center', backgroundColor: 'rgba(33,37,41,0.6)', fontFamily: "Karla , sans-serif", fontWeight: '900' }}>
                     <h5 className="card-title text-warning">{props.name}</h5>
                     <p className="card-text text-white ">{props.amount}</p>
