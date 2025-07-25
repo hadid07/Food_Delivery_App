@@ -50,7 +50,7 @@ const AddItems = () => {
                 <input className='mx-1 my-2 ' name='item_name' onChange={handlechange} type="text" placeholder='Item Name' />
                 <input className='mx-1 my-2' name='item_amount' onChange={handlechange} type="number" placeholder='Enter Amount' />
                 <label className='mx-1 my-2'  htmlFor="fileInput">Image:</label>
-                <input className='mx-1 my-2' name='image' onChange={handlechange} type="file" id="fileInput" />
+                <input className='mx-1 my-2 form-control shadow-lg bg-warning ' name='image' onChange={handlechange} type="file" id="fileInput" />
                 <button className='btn btn-success w-50 my-2'>Add</button>
             </form>
             </div>
@@ -59,4 +59,4 @@ const AddItems = () => {
     )
 }
 
-export default AddItems
+export default AddItems 

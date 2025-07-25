@@ -38,3 +38,24 @@ module.exports.add_item = async(req,res)=>{
         })
     }
 }
+
+module.exports.get_items = async(req,res)=>{
+    try{
+        
+        const items = await Item.find();
+        if(!items){
+           return res.json({
+                message:'No items Found Nothing to show'
+            })
+        }
+        return res.json({
+            message:'items fetched successfully',
+            items:items
+
+        })
+    }catch(err){
+        res.json({
+            message:'Internal Error Occur'
+        })
+    }
+}

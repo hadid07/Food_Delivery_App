@@ -1,7 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import chowmein from "../assets/images/chowmein.jpg"
+import ItemCard from './ItemCard'
+import axios from 'axios';
 
 const Menu = () => {
+    
+        const [items, setItems] = useState([]);
+    
+        useEffect(() => {
+            const Get_Items = async()=>{
+    
+                
+                const response = await axios.get('http://localhost:3000/get_items');
+                const fetched_items = response.data.items;
+                console.log(response.data.items)
+                if (fetched_items.length === 0) {
+                    alert(response.data.message);
+                }
+                else {
+                    setItems(fetched_items);
+                    
+                }
+            }
+            Get_Items();
+        },[])
     return (
         <>
             <div id='Menu' style={{ textAlign: 'center', marginTop: '2rem' }}>
@@ -12,153 +34,16 @@ const Menu = () => {
 
             <div className='d-flex flex-wrap justify-content-center align-items-center gap-3  ' style={{ marginTop: '4rem' }}>
 
-                <div className="card" style={{ width: "15rem", margin: "1rem" }}>
-                    <img src={chowmein} className="card-img-top" alt="..." />
-                    <div className="card-body" style={{ textAlign: 'center', backgroundColor: 'rgba(33,37,41,0.6)', fontFamily: "Karla , sans-serif", fontWeight: '900' }}>
-                        <h5 className="card-title text-warning">Chow mein</h5>
-                        <p className="card-text text-white ">600</p>
 
-                        <div className='d-flex flex-row justify-content-evenly '>
-                            <a href="#" className="btn btn-warning text-white" style={{ height:'38px' }}>Add to Cart</a>
-                            <div className="mb-3">
+                {
+                    items.map((item)=>(
+                        <ItemCard key = {item._id} name = {item.item_name} amount = {item.item_amount} image = {item.item_image} />
 
-                                <select className="form-select" id="quantitySelect">
-                                    <option value="1 ">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                            </div>
-                        </div>
+                    ))
+                }
 
-                    </div>
-                </div>
-                <div className="card" style={{ width: "15rem", margin: "1rem" }}>
-                    <img src={chowmein} className="card-img-top" alt="..." />
-                    <div className="card-body" style={{ textAlign: 'center', backgroundColor: 'rgba(33,37,41,0.6)', fontFamily: "Karla , sans-serif", fontWeight: '900' }}>
-                        <h5 className="card-title text-warning">Chow mein</h5>
-                        <p className="card-text text-white ">600</p>
-
-                        <div className='d-flex flex-row justify-content-evenly '>
-                            <a href="#" className="btn btn-warning text-white" style={{ height:'38px' }}>Add to Cart</a>
-                            <div className="mb-3">
-
-                                <select className="form-select" id="quantitySelect">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="5">6</option>
-                                    <option value="5">7</option>
-                                    <option value="5">8</option>
-                                    <option value="5">9</option>
-                                    <option value="5">10</option>
-                                    <option value="5">11</option>
-                                    <option value="5">12</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div className="card" style={{ width: "15rem", margin: "1rem" }}>
-                    <img src={chowmein} className="card-img-top" alt="..." />
-                    <div className="card-body" style={{ textAlign: 'center', backgroundColor: 'rgba(33,37,41,0.6)', fontFamily: "Karla , sans-serif", fontWeight: '900' }}>
-                        <h5 className="card-title text-warning">Chow mein</h5>
-                        <p className="card-text text-white ">600</p>
-
-                        <div className='d-flex flex-row justify-content-evenly '>
-                            <a href="#" className="btn btn-warning text-white" style={{ height:'38px' }}>Add to Cart</a>
-                            <div className="mb-3">
-
-                                <select className="form-select" id="quantitySelect">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="5">6</option>
-                                    <option value="5">7</option>
-                                    <option value="5">8</option>
-                                    <option value="5">9</option>
-                                    <option value="5">10</option>
-                                    <option value="5">11</option>
-                                    <option value="5">12</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div className="card" style={{ width: "15rem", margin: "1rem" }}>
-                    <img src={chowmein} className="card-img-top" alt="..." />
-                    <div className="card-body" style={{ textAlign: 'center', backgroundColor: 'rgba(33,37,41,0.6)', fontFamily: "Karla , sans-serif", fontWeight: '900' }}>
-                        <h5 className="card-title text-warning">Chow mein</h5>
-                        <p className="card-text text-white ">600</p>
-
-                        <div className='d-flex flex-row justify-content-evenly '>
-                            <a href="#" className="btn btn-warning text-white" style={{ height:'38px' }}>Add to Cart</a>
-                            <div className="mb-3">
-
-                                <select className="form-select" id="quantitySelect">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="5">6</option>
-                                    <option value="5">7</option>
-                                    <option value="5">8</option>
-                                    <option value="5">9</option>
-                                    <option value="5">10</option>
-                                    <option value="5">11</option>
-                                    <option value="5">12</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div className="card" style={{ width: "15rem", margin: "1rem" }}>
-                    <img src={chowmein} className="card-img-top" alt="..." />
-                    <div className="card-body" style={{ textAlign: 'center', backgroundColor: 'rgba(33,37,41,0.6)', fontFamily: "Karla , sans-serif", fontWeight: '900' }}>
-                        <h5 className="card-title text-warning">Chow mein</h5>
-                        <p className="card-text text-white ">600</p>
-
-                        <div className='d-flex flex-row justify-content-evenly '>
-                            <a href="#" className="btn btn-warning text-white" style={{ height:'38px' }}>Add to Cart</a>
-                            <div className="mb-3">
-
-                                <select className="form-select" id="quantitySelect">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="5">6</option>
-                                    <option value="5">7</option>
-                                    <option value="5">8</option>
-                                    <option value="5">9</option>
-                                    <option value="5">10</option>
-                                    <option value="5">11</option>
-                                    <option value="5">12</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
                 
-
+                
             </div>
             </div>
         </>
