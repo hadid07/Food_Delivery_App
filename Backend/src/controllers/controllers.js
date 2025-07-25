@@ -92,7 +92,7 @@ module.exports.login_user = async (req, res) => {
       httpOnly: true,
       secure: false,
       sameSite: "Lax",
-      maxAge: 15 * 60 * 1000
+      maxAge: 60 * 60 * 1000
     }).json({
       token:token,
       message:'Login Successfull',
@@ -144,13 +144,20 @@ module.exports.logout_user = (req,res)=>{
 module.exports.AddToCart = async(req,res)=>{
   const userid = req.user._id;
   const itemid = req.body.itemid;
+  const itemName = req.body.itemName;
+  const itemAmount = req.body.itemAmount;
+  const itemImage = req.body.itemImage;
   // console.log(itemid);
   // alert(itemid)
   try{
 
     const cartitem = new CartItem({
       userid:userid,
-      itemid:itemid
+      itemid:itemid,
+      itemName:itemName,
+      itemAmount:itemAmount,
+      itemImage:itemImage
+
       
     });
 
@@ -167,4 +174,31 @@ module.exports.AddToCart = async(req,res)=>{
   }
 
 
+}
+module.exports.showCartItems = async(req,res)=>{
+  const userid = req.user._id;
+  const result = await CartItem.find({userid:userid});
+  try{
+
+    if(!result){
+      return res.json({
+        items:result,
+        message:'Nothing to Show in Cart',
+        status:false
+      })
+    }
+    else{
+      res.json({
+        message:'Cart Item fetched successfully',
+        status:true,
+        items:result
+        
+      })
+    }
+  }catch(err){
+    res.json({
+      message:'Internal Error Occur',
+      status:false
+    })
+  }
 }

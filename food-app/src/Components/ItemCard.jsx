@@ -5,10 +5,10 @@ import axios from 'axios'
 const ItemCard = (props) => {
 
 
-    const AddToCart = async(id,name)=>{
+    const AddToCart = async(id,name,amount,image)=>{
         // alert(`${name} is added to cart`);
         try{
-            const response = await axios.post('http://localhost:3000/addtocart',{itemid:id},{
+            const response = await axios.post('http://localhost:3000/addtocart',{itemid:id,itemName:name,itemAmount:amount,itemImage:image},{
                 withCredentials:true
                 
             }
@@ -27,7 +27,7 @@ const ItemCard = (props) => {
                     <p className="card-text text-white ">{props.amount}</p>
 
                     <div className='d-flex flex-row justify-content-evenly '>
-                        <button  className="btn btn-warning text-white" style={{ height: '38px' }} onClick={()=>AddToCart(props.id,props.name)} >Add to Cart</button>
+                        <button  className="btn btn-warning text-white" style={{ height: '38px' }} onClick={()=>AddToCart(props.id,props.name,props.amount,props.image)} >Add to Cart</button>
                         <div className="mb-3">
 
                             <select className="form-select" id="quantitySelect">
