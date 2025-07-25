@@ -59,3 +59,19 @@ module.exports.get_items = async(req,res)=>{
         })
     }
 }
+
+module.exports.delete_item = async(req,res)=>{
+    try{
+
+        await Item.findByIdAndDelete(req.params.id);
+        return res.json({
+            message:'Deleted Successfully',
+            status:true
+        })
+    }catch(err){
+        res.json({
+            message:'Failed to delete item',
+            status:false
+        })
+    }
+}

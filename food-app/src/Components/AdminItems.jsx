@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-
 const AdminItems =  () => {
 
 
@@ -22,9 +21,21 @@ const AdminItems =  () => {
             }
         }
         Get_Items();
-    })
+    },[]);
 
+    const handleDelete = async(item)=>{
+        try{
 
+            // const result = await User.find(item._id);
+            const response = await axios.delete(`http://localhost:3000/delete_item/${item._id}`,{
+                withCredentials:true  
+            })           
+            alert(response.data.message); 
+        }catch(err){
+
+            console.log('internal error')
+    }
+    }
 
     return (
         <div className=' row'>
@@ -46,7 +57,7 @@ const AdminItems =  () => {
                             <td className='text-light'>{item.item_amount}</td>
                             <td>
                                 {/* <button className='btn btn-outline-warning mx-2'>Edit</button> */}
-                                <button className='btn btn-danger mx-2'> Delete</button>
+                                <button className='btn btn-danger mx-2' onClick={()=>handleDelete(item)}> Delete</button>
 
                             </td>
                         </tr>
