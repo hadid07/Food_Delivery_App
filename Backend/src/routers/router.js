@@ -15,5 +15,6 @@ router.post('/logout',controller.logout_user);
 router.post('/add_item',upload.single('image'),admin_controller.add_item);
 router.get('/get_items',admin_controller.get_items);
 router.delete('/delete_item/:id',admin_controller.delete_item);
+router.post('/addtocart',is_Auth,controller.AddToCart);
 
 module.exports = router;

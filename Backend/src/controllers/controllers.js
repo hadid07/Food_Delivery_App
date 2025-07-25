@@ -1,8 +1,11 @@
 const User = require('../models/users');
+const CartItem = require('../models/cart_item');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
+
+
 module.exports.signup_user = async (req, res) => {
   try {
     // Text fields come in req.body
@@ -136,4 +139,32 @@ module.exports.logout_user = (req,res)=>{
     token:false,
     message:'user logged_out'
   })
+}
+
+module.exports.AddToCart = async(req,res)=>{
+  const userid = req.user._id;
+  const itemid = req.body.itemid;
+  // console.log(itemid);
+  // alert(itemid)
+  try{
+
+    const cartitem = new CartItem({
+      userid:userid,
+      itemid:itemid
+      
+    });
+
+    await cartitem.save();
+    return res.json({
+      message:'item added to cart successfully',
+      status:true
+    })
+  }catch(err){
+    return res.json({
+      message:'Failed to add item to cart',
+      status:false
+    })
+  }
+
+
 }

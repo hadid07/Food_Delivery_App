@@ -1,7 +1,23 @@
 import React from 'react'
 import chowmein from '../assets/images/chowmein.jpg'
+import axios from 'axios'
 
 const ItemCard = (props) => {
+
+
+    const AddToCart = async(id,name)=>{
+        // alert(`${name} is added to cart`);
+        try{
+            const response = await axios.post('http://localhost:3000/addtocart',{itemid:id},{
+                withCredentials:true
+                
+            }
+            )
+            alert(response.data.message);
+        }catch(err){
+            alert(`Failed to add ${name} to cart`)
+        }
+    }
     return (
         <div>
             <div className="card" style={{ width: "15rem", margin: "1rem" }}>
@@ -11,7 +27,7 @@ const ItemCard = (props) => {
                     <p className="card-text text-white ">{props.amount}</p>
 
                     <div className='d-flex flex-row justify-content-evenly '>
-                        <a href="#" className="btn btn-warning text-white" style={{ height: '38px' }}>Add to Cart</a>
+                        <button  className="btn btn-warning text-white" style={{ height: '38px' }} onClick={()=>AddToCart(props.id,props.name)} >Add to Cart</button>
                         <div className="mb-3">
 
                             <select className="form-select" id="quantitySelect">

@@ -37,7 +37,7 @@ const Menu = () => {
 
                 {
                     items.map((item)=>(
-                        <ItemCard key = {item._id} name = {item.item_name} amount = {item.item_amount} image = {item.item_image} />
+                        <ItemCard key = {item._id} id = {item._id} name = {item.item_name} amount = {item.item_amount} image = {item.item_image} />
 
                     ))
                 }
