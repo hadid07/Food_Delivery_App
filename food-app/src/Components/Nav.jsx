@@ -40,7 +40,7 @@ const Nav = () => {
   return (
     <nav className="navbar navbar-light bg-dark border-bottom border-light">
       <div className="container-fluid d-flex align-items-center justify-content-between">
-        <Link to="/" className="navbar-brand text-white">
+        <Link to="/" className="navbar-brand text-warning">
           Tàng Chī (烫吃)
         </Link>
 

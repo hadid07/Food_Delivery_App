@@ -17,5 +17,7 @@ router.get('/get_items',admin_controller.get_items);
 router.delete('/delete_item/:id',admin_controller.delete_item);
 router.post('/addtocart',is_Auth,controller.AddToCart);
 router.get('/cartitems',is_Auth,controller.showCartItems);
+router.delete('/delete_cart_item/:id',controller.delete_cart_item);
+router.post('/proceed_order',controller.proceed_item);
 
 module.exports = router;

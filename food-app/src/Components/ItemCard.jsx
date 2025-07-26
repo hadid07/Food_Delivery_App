@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import chowmein from '../assets/images/chowmein.jpg'
 import axios from 'axios'
 
 const ItemCard = (props) => {
+    const [quantity,setQuantity] = useState(1);
 
 
     const AddToCart = async(id,name,amount,image)=>{
         // alert(`${name} is added to cart`);
         try{
-            const response = await axios.post('http://localhost:3000/addtocart',{itemid:id,itemName:name,itemAmount:amount,itemImage:image},{
+            const response = await axios.post('http://localhost:3000/addtocart',{itemid:id,itemName:name,itemAmount:amount,itemImage:image,quantity:quantity},{
                 withCredentials:true
                 
             }
@@ -30,7 +31,10 @@ const ItemCard = (props) => {
                         <button  className="btn btn-warning text-white" style={{ height: '38px' }} onClick={()=>AddToCart(props.id,props.name,props.amount,props.image)} >Add to Cart</button>
                         <div className="mb-3">
 
-                            <select className="form-select" id="quantitySelect">
+                            <select className="form-select" id="quantitySelect" 
+                            value={quantity}
+                            onChange={(e)=>setQuantity(Number(e.target.value))}
+                            >
                                 {
                                     [...Array(12)].map((_, i) => (
                                         <option key={i + 1} value={i + 1}>{i + 1}</option>

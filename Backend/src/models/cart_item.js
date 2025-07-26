@@ -8,7 +8,12 @@ const cart_item_schema = mongoose.Schema({
         default:1},
     itemName:String,
     itemAmount:Number,
-    itemImage:String
+    itemImage:String,
+    proceed:{
+        type:Boolean,
+        default:false
+    },
+    status:String
 })
 
 const cart_item = mongoose.model('CartItem',cart_item_schema);

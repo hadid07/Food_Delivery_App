@@ -1,5 +1,6 @@
 const User = require('../models/users');
 const CartItem = require('../models/cart_item');
+const OrderItem = require('../models/order_item');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -84,7 +85,7 @@ module.exports.login_user = async (req, res) => {
 
     // ------correct password.... crating JWT-----
      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "15m"
+      expiresIn: "2h"
     });
 
 
@@ -92,7 +93,7 @@ module.exports.login_user = async (req, res) => {
       httpOnly: true,
       secure: false,
       sameSite: "Lax",
-      maxAge: 60 * 60 * 1000
+      maxAge: 2 * 60 * 60 * 1000
     }).json({
       token:token,
       message:'Login Successfull',
@@ -147,6 +148,7 @@ module.exports.AddToCart = async(req,res)=>{
   const itemName = req.body.itemName;
   const itemAmount = req.body.itemAmount;
   const itemImage = req.body.itemImage;
+  const quantity = req.body.quantity;
   // console.log(itemid);
   // alert(itemid)
   try{
@@ -156,7 +158,8 @@ module.exports.AddToCart = async(req,res)=>{
       itemid:itemid,
       itemName:itemName,
       itemAmount:itemAmount,
-      itemImage:itemImage
+      itemImage:itemImage,
+      quantity:quantity
 
       
     });
@@ -177,7 +180,7 @@ module.exports.AddToCart = async(req,res)=>{
 }
 module.exports.showCartItems = async(req,res)=>{
   const userid = req.user._id;
-  const result = await CartItem.find({userid:userid});
+  const result = await CartItem.find({userid:userid,proceed:false});
   try{
 
     if(!result){
@@ -198,6 +201,51 @@ module.exports.showCartItems = async(req,res)=>{
   }catch(err){
     res.json({
       message:'Internal Error Occur',
+      status:false
+    })
+  }
+}
+
+module.exports.delete_cart_item = async(req,res)=>{
+  try{
+    await CartItem.findByIdAndDelete({_id:req.params.id});
+    res.json({
+      message:'Item Deleted from Cart Successfully',
+      status:true
+    })
+  }catch(err){
+    res.json({
+      message:'Could not delete item from cart',
+      status:false
+    })
+  }
+}
+
+module.exports.proceed_item = async(req,res)=>{
+  const cartitems = req.body.items;
+  const orderitems = cartitems.map((item)=>({
+    itemid:item._id,
+    itemName:item.itemName,
+    itemAmount:item.itemAmount,
+    quantity:item.quantity
+
+  })) 
+  try{
+    const n_orderitem = new OrderItem({
+      userid:req.body.items[0].userid,
+      items:orderitems,
+      status:"Pending"
+    })
+    await n_orderitem.save();
+    await CartItem.deleteMany({userid:req.body.items[0].userid})
+    res.json({
+      message:"Order Proceeded",
+      status:true
+    })
+  }catch(err){
+    console.log(err)
+    res.json({
+      message:"could not proceed order",
       status:false
     })
   }
