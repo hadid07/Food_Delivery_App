@@ -5,6 +5,10 @@ const user_Schema = new mongoose.Schema({
   f_name: { type: String, required: true },
   l_name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
+  address:{
+    type:String,
+    required:true
+  },
   password: { type: String, required: true },
   phone: { type: String },
   image: { type: String, default: 'default.jpg' }

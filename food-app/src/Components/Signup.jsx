@@ -8,10 +8,11 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     f_name: "",
     l_name: "",
+    address:'',
     email: "",
     phone: "",
     password: "",
-    image: null,
+    image: null
   });
 
   const handlechange = (e) => {
@@ -29,6 +30,7 @@ const Signup = () => {
       const data = new FormData();
       data.append('f_name', formData.f_name);
       data.append('l_name', formData.l_name);
+      data.append('address',formData.address);
       data.append('email', formData.email);
       data.append('phone', formData.phone);
       data.append('password', formData.password);
@@ -71,6 +73,15 @@ const Signup = () => {
             placeholder='Last Name'
             onChange={handlechange}
             value={formData.l_name}
+            required
+          />
+          <input
+            name='address'
+            className='m-2'
+            type="text"
+            placeholder='Address'
+            onChange={handlechange}
+            value={formData.address}
             required
           />
           <input

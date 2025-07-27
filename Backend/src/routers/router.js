@@ -19,5 +19,8 @@ router.post('/addtocart',is_Auth,controller.AddToCart);
 router.get('/cartitems',is_Auth,controller.showCartItems);
 router.delete('/delete_cart_item/:id',controller.delete_cart_item);
 router.post('/proceed_order',controller.proceed_item);
+router.get('/get_user_orders',is_Auth,controller.get_user_orders);
+router.get('/get_all_orders',admin_controller.get_all_orders);
+router.put('/update_order_status/:orderid',admin_controller.update_order_status);
 
 module.exports = router;

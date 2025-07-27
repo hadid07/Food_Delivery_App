@@ -7,7 +7,7 @@ const AdminNav = () => {
 
             <div className=' border-bottom border-light navbar navbar-expand navbar-dark d-flex flex-row text-white justify-content-between'>
                 <Link to="/" className=" mx-3 navbar-brand text-white">
-                    Tàng Chī (烫吃)
+                    حدید فوڈز
                 </Link>
                 <div>
                     <button className='btn btn-danger mx-3'>Logout</button>

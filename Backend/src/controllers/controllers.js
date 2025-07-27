@@ -10,7 +10,7 @@ const multer = require('multer');
 module.exports.signup_user = async (req, res) => {
   try {
     // Text fields come in req.body
-    const { f_name, l_name, email, password, phone } = req.body;
+    const { f_name, l_name, address,email, password, phone } = req.body;
 
     // If user uploaded a file, multer puts file info in req.file
     // If no file uploaded, req.file will be undefined
@@ -25,6 +25,7 @@ module.exports.signup_user = async (req, res) => {
     const new_user = new User({
       f_name,
       l_name,
+      address,
       email,
       password,
       phone,
@@ -246,6 +247,24 @@ module.exports.proceed_item = async(req,res)=>{
     console.log(err)
     res.json({
       message:"could not proceed order",
+      status:false
+    })
+  }
+}
+
+module.exports.get_user_orders = async(req,res)=>{
+  try {
+    const id = req.user._id;
+    const items = await OrderItem.find({userid:id});
+    res.json({
+      orders:items,
+      message:'Orders fetched successfully',
+      status:true
+      
+    })
+  } catch (error) {
+    res.json({
+      message:'could not get orders',
       status:false
     })
   }
