@@ -36,6 +36,20 @@ const UserOrders = () => {
         get_user_orders();
     }, [])
 
+    const CancelOrder = async(orderid,orderstatus)=>{
+        if(orderstatus == "Cancelled"){
+             return alert("Already Cancelled!! Cannot Cancel Again");
+        }
+        try{
+            const response = await axios.put(`http://localhost:3000/update_order_status/${orderid}`,{status:"Cancelled"},{
+                withCredentials:true
+            });
+            alert(response.data.message);
+        }catch(err){
+            alert("Unable to Cancel Order");
+        }
+    }
+
     return (
         <div className='row'>
             <h3 className='text-light mx-5'> My Orders</h3>
@@ -72,7 +86,7 @@ const UserOrders = () => {
                                         </tbody>
                                         <div className='d-flex col-12 flex-row justify-content-between mt-4 mx-2 border-top border-light'> <div className='' >Total Amount</div> <div className=''>{Total_Amount}</div></div>
                                         <div className=' mt-4 mx-2 col-12'>
-                                            <button className='btn btn-danger'>Cancel</button>
+                                            <button className='btn btn-danger' onClick={()=>CancelOrder(order._id,order.status)}>Cancel</button>
 
                                         </div>
                                     </table>
