@@ -129,3 +129,35 @@ module.exports.update_order_status = async(req,res)=>{
 
 
 }
+
+module.exports.get_order_details = async(req,res) =>{
+    try{
+
+        const orders = await OrderItem.find();
+        const TotalOrders = orders.length;
+        const que_orders = await OrderItem.find({status:"Pending"});
+        const QueOrders = que_orders.length;
+        const completed_orders = await OrderItem.find({status:"Completed"});
+        const CompletedOrders =completed_orders.length;
+        
+        let TotalIncome = 0;
+        completed_orders.map((order)=>{
+            order.items.map((item)=>{
+                TotalIncome += item.itemAmount * item.quantity;
+            })
+        })
+
+        res.json({
+            status:true,
+            TotalOrders:TotalOrders,
+            TotalIncome:TotalIncome,
+            CompletedOrders:CompletedOrders,
+            QueOrders:QueOrders
+        })
+    }catch(err){
+        res.json({
+            status:false,
+            message:"Failed to get Details"
+        })
+    }
+}

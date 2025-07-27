@@ -71,6 +71,16 @@ const ManageOrders = () => {
       }
     };
 
+    const get_orders_details = async() => {
+      try{
+        const response = axios.get('http://localhost:3000/get_order_details',{
+          withCredentials:true
+        });
+      }catch(err){
+
+      }
+    }
+
     get_orders();
   }, []);
 
