@@ -4,4 +4,24 @@ Backend/uploads
 ./node_modules/
 dist/
 build/
+Backend/.env
+
+
+
+
+
+# Node modules
+node_modules/
+Backend/node_modules/
+food-app/node_modules/
+
+# Environment variables
 .env
+Backend/.env
+
+# Build folders
+dist/
+build/
+
+# Uploaded files
+Backend/uploads/
